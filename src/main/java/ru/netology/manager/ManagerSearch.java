@@ -4,6 +4,7 @@ import ru.netology.domain.Search;
 import ru.netology.repository.RepositorySearch;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class ManagerSearch {
 
@@ -17,7 +18,7 @@ public class ManagerSearch {
         repositorySearch.add(search);
     }
 
-    public Search[] findAll(String from, String to) {
+    public Search[] findAll(String from, String to, Comparator<Search> comparator) {
         Search[] result = new Search[0];
         for (Search ticket : repositorySearch.getAll()) {
             if (ticket.getFrom().equals(from) && ticket.getTo().equals(to)) {
@@ -27,7 +28,7 @@ public class ManagerSearch {
                 result = tmp;
             }
         }
-        Arrays.sort(result);
+        Arrays.sort(result, comparator);
         return result;
     }
 }
