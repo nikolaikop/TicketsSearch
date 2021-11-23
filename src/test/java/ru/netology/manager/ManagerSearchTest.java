@@ -3,6 +3,7 @@ package ru.netology.manager;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.netology.comparator.ComparatorSearch;
 import ru.netology.domain.Search;
 import ru.netology.repository.RepositorySearch;
 
@@ -12,6 +13,7 @@ class ManagerSearchTest {
 
     RepositorySearch repository = new RepositorySearch();
     ManagerSearch search = new ManagerSearch(repository);
+    ComparatorSearch comparator = new ComparatorSearch();
 
     Search search1 = new Search(1, 4000, "LED", "KUF", 240);
     Search search2 = new Search(2, 3000, "SVO", "LAX", 180);
@@ -29,7 +31,14 @@ class ManagerSearchTest {
     @Test
     void sortIfFlightIsFound() {
         Search[] expected = {search3};
-        Search[] actual = search.findAll("LED", "KHV");
+        Search[] actual = search.findAll("LED", "KHV", comparator);
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    void sortIfFlightIsNotFound() {
+        Search[] expected = {};
+        Search[] actual = search.findAll("SVO", "LED", comparator);
         Assertions.assertArrayEquals(expected, actual);
     }
 
